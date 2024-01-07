@@ -2,35 +2,30 @@ import React from "react";
 
 type GameBoardProps = {
   onSelectSquare: (rowIndex: number, colIndex: number) => void;
-  turns: GameTurn[];
+  board: Array<PlayerSymbol>[];
 };
 
-type GameBoard = Array<PlayerSymbol>[];
+const GameBoard = ({ onSelectSquare, board }: GameBoardProps) => {
+//   let gameBoard = initialGameBoard;
 
-const initialGameBoard: GameBoard = [
-  [null, null, null],
-  [null, null, null],
-  [null, null, null],
-];
+//   for (const turn of turns) {
+//     const { square, player } = turn;
+//     const { row, col } = square;
 
-const GameBoard = ({ onSelectSquare, turns }: GameBoardProps) => {
-  let gameBoard = initialGameBoard;
-
-  for (const turn of turns) {
-    const { square, player } = turn;
-    const { row, col } = square;
-
-    gameBoard[row][col] = player;
-  }
+//     gameBoard[row][col] = player;
+//   }
 
   return (
     <ol id="game-board">
-      {initialGameBoard.map((row, rowIndex) => (
+      {board.map((row, rowIndex) => (
         <li key={rowIndex}>
           <ol>
             {row.map((playerSymbol, colIndex) => (
               <li key={colIndex}>
-                <button onClick={() => onSelectSquare(rowIndex, colIndex)} disabled={playerSymbol !== null}>
+                <button
+                  onClick={() => onSelectSquare(rowIndex, colIndex)}
+                  disabled={playerSymbol !== null}
+                >
                   {playerSymbol}
                 </button>
               </li>
