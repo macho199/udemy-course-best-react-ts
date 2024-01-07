@@ -5,7 +5,14 @@ import Log from "./components/Log";
 import { WINNING_COMBINATION } from "./winning-combination";
 import GameOver from "./components/GameOver";
 
-const initialGameBoard: Array<PlayerSymbol>[] = [
+type PlayersKey = keyof typeof PLAYERS
+
+const PLAYERS: Players = {
+  X: 'Player1',
+  O: 'Player2'
+}
+
+const INITIAL_GAME_BOARD: Array<PlayerSymbol>[] = [
   [null, null, null],
   [null, null, null],
   [null, null, null],
@@ -19,12 +26,8 @@ const deriveActivePlayer = (gameTurns: GameTurn[]) => {
   return activePlayer;
 };
 
-const App = () => {
-  const [gameTurns, setGameTurns] = useState<GameTurn[]>([]);
-  const activePlayer: PlayerSymbol = deriveActivePlayer(gameTurns);
-  //const prevPlayer: PlayerSymbol = activePlayer === 'X' ? 'O' : 'X'
-
-  let gameBoard = [...initialGameBoard.map((row) => [...row])]
+const deriveGameBoard = (gameTurns: GameTurn[]) => {
+  let gameBoard = [...INITIAL_GAME_BOARD.map((row) => [...row])]
 
   for (const turn of gameTurns) {
     const { square, player } = turn
@@ -33,6 +36,10 @@ const App = () => {
     gameBoard[row][col] = player
   }
 
+  return gameBoard
+}
+
+const deriveWinner = (gameBoard: Array<PlayerSymbol>[], players: Players) => {
   let winner
 
   for (const combination of WINNING_COMBINATION) {
@@ -41,10 +48,20 @@ const App = () => {
     const thirdSquareSymbol: PlayerSymbol = gameBoard[combination[2].row][combination[2].col];
 
     if (firstSquareSymbol && firstSquareSymbol === secondSquareSymbol && firstSquareSymbol === thirdSquareSymbol) {
-      winner = firstSquareSymbol
+      winner = players[firstSquareSymbol as PlayersKey]
     }
   }
 
+  return winner
+}
+
+const App = () => {
+  const [players, setPlayers] = useState<Players>(PLAYERS);
+  const [gameTurns, setGameTurns] = useState<GameTurn[]>([]);
+  const activePlayer: PlayerSymbol = deriveActivePlayer(gameTurns);
+
+  const gameBoard = deriveGameBoard(gameTurns)
+  const winner = deriveWinner(gameBoard, players)
   const hasDraw: boolean = gameTurns.length === 9
 
   const handleSelectSquare = (rowIndex: number, colIndex: number) => {
@@ -62,19 +79,30 @@ const App = () => {
     setGameTurns([])
   }
 
+  const handlePlayerNameChange = (symbol: PlayerSymbol, newName: string) => {
+    setPlayers((prevPlayers => {
+      return {
+        ...prevPlayers,
+        [symbol as PlayersKey]: newName
+      }
+    }));
+  }
+
   return (
     <main>
       <div id="game-container">
         <ol id="players" className="highlight-player">
           <Player
-            initialName="Player 1"
+            initialName={players.X}
             symbol="X"
             isActive={activePlayer === "X"}
+            onChangeName={handlePlayerNameChange}
           />
           <Player
-            initialName="Player 2"
+            initialName={players.O}
             symbol="O"
             isActive={activePlayer === "O"}
+            onChangeName={handlePlayerNameChange}
           />
         </ol>
         {(winner || hasDraw) && <GameOver winner={winner} onRestart={handleRestart} />}
