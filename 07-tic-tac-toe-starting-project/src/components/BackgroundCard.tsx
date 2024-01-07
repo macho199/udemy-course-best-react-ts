@@ -1,18 +1,14 @@
 import React from "react";
-import { Column } from "../types/common";
 import CheckCard from "./CheckCard";
+import { Player } from "../types/common";
 
 type BackgroundCardProps = {
   row: number,
   column: number,
-  pad: [Column, Column, Column]
+  pad: Player[][]
   handleClickCard: (row: number, column: number) => void;
   children?: React.ReactNode;
 }
-
-type ColumnKey = keyof typeof defaultColumn;
-
-const defaultColumn = { "0": null, "1": null, "2": null };
 
 const BackgroundCard = ({ row, column, pad, handleClickCard, ...props }: BackgroundCardProps) => {
   return (
@@ -26,7 +22,7 @@ const BackgroundCard = ({ row, column, pad, handleClickCard, ...props }: Backgro
         cursor: 'pointer'
       }}
       onClick={() => handleClickCard(row, column)}
-    >{pad[row][String(column) as ColumnKey] && <CheckCard>{pad[row][String(column) as ColumnKey]}</CheckCard>}</div>
+    >{pad[row][column] && <CheckCard>{pad[row][column]}</CheckCard>}</div>
   );
 };
 
