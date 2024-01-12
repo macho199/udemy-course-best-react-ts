@@ -8,5 +8,7 @@
     "forceConsistentCasingInFileNames": true, // 파일 이름에 일관된 대소문자 사용
     "sourceMap": true,
     "strict": true, // 모든 엄격한 타입 검사 옵션을 활성화  alwaysStrict, strictNullChecks, strictBindCallApply, strictFunctionTypes, strictPropertyInitialization, noImplicitAny, noImplicitThis, useUnknownInCatchVariables
-  }
+  },
+  "include": ["types", "src"],
+  "exclude": ["node_modules"],
 }

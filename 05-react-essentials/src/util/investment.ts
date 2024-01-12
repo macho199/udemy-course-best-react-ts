@@ -4,12 +4,26 @@
 // - annualInvestment: The amount invested every year
 // - expectedReturn: The expected (annual) rate of return
 // - duration: The investment duration (time frame)
+
+/**
+ *
+ * @param number initialInvestment - 초기 투자액
+ * @param number annualInvestment - 연간 투자량
+ * @param number expectedReturn - 예상 수익
+ * @param number duration - 투자 기간
+ * @returns
+ */
 export function calculateInvestmentResults({
   initialInvestment,
   annualInvestment,
   expectedReturn,
   duration,
-}: {initialInvestment: number, annualInvestment: number, expectedReturn: number, duration: number}) {
+}: {
+  initialInvestment: number;
+  annualInvestment: number;
+  expectedReturn: number;
+  duration: number;
+}) {
   const annualData = [];
   let investmentValue = initialInvestment;
 
@@ -30,9 +44,9 @@ export function calculateInvestmentResults({
 // The browser-provided Intl API is used to prepare a formatter object
 // This object offers a "format()" method that can be used to format numbers as currency
 // Example Usage: formatter.format(1000) => yields "$1,000"
-export const formatter = new Intl.NumberFormat('en-US', {
-  style: 'currency',
-  currency: 'USD',
+export const formatter = new Intl.NumberFormat("en-US", {
+  style: "currency",
+  currency: "USD",
   minimumFractionDigits: 0,
   maximumFractionDigits: 0,
 });

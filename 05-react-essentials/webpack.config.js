@@ -24,6 +24,11 @@ module.exports = {
         test: /\.css$/i,
         use: [MiniCssExtractPlugin.loader, 'css-loader', 'postcss-loader'],
       },
+      {
+        test: /\.(jpg|jpeg|png)$/,
+        exclude: /node_modules/,
+        use: "file-loader",
+      },
     ],
   },
   plugins: [
