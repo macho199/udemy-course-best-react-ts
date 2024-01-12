@@ -11,7 +11,10 @@ const Player = () => {
 
   const handleClick = () => {
     if (!playerName.current) return
-    setEnteredPlayerName(playerName.current.value)
+    const value = playerName.current.value
+    playerName.current.value = ''
+
+    setEnteredPlayerName(value)
   }
 
   return (
