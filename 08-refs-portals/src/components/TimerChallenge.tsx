@@ -1,5 +1,5 @@
-import React, { useRef, useState } from "react";
-import ResultModal, { DialogHandle } from "./ResultModal";
+import React, { useRef, useState } from 'react';
+import ResultModal, { DialogHandle } from './ResultModal';
 
 type TimerChallengeProps = {
   title: string;
@@ -21,8 +21,8 @@ const TimerChallenge = ({ title, targetTime }: TimerChallengeProps) => {
   }
 
   const handleReset = () => {
-    setTimeRemaining(targetTime * 1000)
-  }
+    setTimeRemaining(targetTime * 1000);
+  };
 
   const handleStart = () => {
     timer.current = setInterval(() => {
@@ -46,15 +46,15 @@ const TimerChallenge = ({ title, targetTime }: TimerChallengeProps) => {
       <section className="challenge">
         <h2>{title}</h2>
         <p className="challenge-time">
-          {targetTime} second{targetTime > 1 ? "s" : ""}
+          {targetTime} second{targetTime > 1 ? 's' : ''}
         </p>
         <p>
           <button onClick={timerIsActive ? handleStop : handleStart}>
-            {timerIsActive ? "Stop" : "Start"} Challenge
+            {timerIsActive ? 'Stop' : 'Start'} Challenge
           </button>
         </p>
-        <p className={timerIsActive ? "active" : undefined}>
-          {timerIsActive ? "Time is running..." : "Timer inactive"}
+        <p className={timerIsActive ? 'active' : undefined}>
+          {timerIsActive ? 'Time is running...' : 'Timer inactive'}
         </p>
       </section>
     </>
